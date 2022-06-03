@@ -1,43 +1,34 @@
-package bg.softuni.web.mobilelele.models.entities;
+package bg.softuni.web.mobilelele.models.views;
 
+import bg.softuni.web.mobilelele.models.entities.Model;
+import bg.softuni.web.mobilelele.models.entities.User;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "offers")
-public class Offer extends BaseEntity{
-
-    @Column(columnDefinition = "TEXT")
+public class OfferSummaryView {
+    private Long id;
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Engine engine;
-
-    @Column(name = "image_url")
     private String imageUrl;
-
-    @Column(nullable = false)
     private Long mileage;
-
-    @Column(nullable = false)
     private BigDecimal price;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private Transmission transmission;
-
-    @Column(nullable = false)
     private Integer year;
+    private String model;
 
-    @ManyToOne
-    private Model model;
+    public Long getId() {
+        return id;
+    }
 
-    @ManyToOne
-    private User seller;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;
@@ -95,19 +86,11 @@ public class Offer extends BaseEntity{
         this.year = year;
     }
 
-    public Model getModel() {
+    public String getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(String model) {
         this.model = model;
-    }
-
-    public User getSeller() {
-        return seller;
-    }
-
-    public void setSeller(User seller) {
-        this.seller = seller;
     }
 }
