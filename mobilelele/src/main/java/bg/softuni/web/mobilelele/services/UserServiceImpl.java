@@ -4,6 +4,7 @@ import bg.softuni.web.mobilelele.models.entities.User;
 import bg.softuni.web.mobilelele.models.entities.UserRole;
 import bg.softuni.web.mobilelele.models.entities.enums.Role;
 import bg.softuni.web.mobilelele.models.service.UserLoginServiceModel;
+import bg.softuni.web.mobilelele.models.service.UserRegisterServiceModel;
 import bg.softuni.web.mobilelele.repositories.UserRepository;
 import bg.softuni.web.mobilelele.repositories.UserRoleRepository;
 import bg.softuni.web.mobilelele.user.CurrentUser;
@@ -36,8 +37,8 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    private void initiliazeUsers(){
-        if(this.userRepository.count() == 0){
+    private void initiliazeUsers() {
+        if (this.userRepository.count() == 0) {
             User admin = new User();
             admin.setActive(true);
             admin.setUsername("admin");
@@ -61,15 +62,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void initiliazeRoles(){
-        if(this.userRoleRepository.count() == 0){
+    private void initiliazeRoles() {
+        if (this.userRoleRepository.count() == 0) {
             UserRole adminRole = new UserRole();
             adminRole.setRole(Role.ADMIN);
 
             UserRole userRole = new UserRole();
             userRole.setRole(Role.USER);
 
-            this.userRoleRepository.saveAll(List.of(adminRole,userRole));
+            this.userRoleRepository.saveAll(List.of(adminRole, userRole));
         }
     }
 
@@ -78,20 +79,16 @@ public class UserServiceImpl implements UserService {
     public boolean login(UserLoginServiceModel userLoginServiceModel) {
         Optional<User> userEntityOpt = userRepository.findUserByUsername(userLoginServiceModel.getUsername());
 
-        if(userEntityOpt.isEmpty()){
+        if (userEntityOpt.isEmpty()) {
             logout();
             return false;
-        }else{
+        } else {
             boolean success = passwordEncoder
                     .matches(userLoginServiceModel.getRawPassword(), userEntityOpt.get().getPassword());
 
-            if(success){
+            if (success) {
                 User loggedInUser = userEntityOpt.get();
-                this.currentUser.setUsername(loggedInUser.getUsername());
-                this.currentUser.setLogged(true);
-                this.currentUser.setFirstName(loggedInUser.getFirstName());
-                this.currentUser.setLastName(loggedInUser.getLastName());
-
+                login(loggedInUser);
                 loggedInUser.getRoles()
                         .forEach(r -> this.currentUser.addRole(r.getRole()));
             }
@@ -103,5 +100,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public void logout() {
         this.currentUser.clean();
+    }
+
+    @Override
+    public void registerAndLoginUser(UserRegisterServiceModel userRegisterServiceModel) {
+        User newUser = new User();
+        UserRole userRole = this.userRoleRepository.findByRole(Role.USER);
+
+        newUser.setUsername(userRegisterServiceModel.getUsername());
+        newUser.setFirstName(userRegisterServiceModel.getFirstName());
+        newUser.setLastName(userRegisterServiceModel.getLastName());
+        newUser.setPassword(this.passwordEncoder.encode(userRegisterServiceModel.getPassword()));
+        newUser.setActive(true);
+        newUser.setRoles(Set.of(userRole));
+
+        this.userRepository.save(newUser);
+        login(newUser);
+    }
+
+    @Override
+    public boolean isUsernameFree(String username) {
+        return this.userRepository.findUserByUsernameIgnoreCase(username).isEmpty();
+    }
+
+    private void login(User user) {
+        this.currentUser.setUsername(user.getUsername());
+        this.currentUser.setLogged(true);
+        this.currentUser.setFirstName(user.getFirstName());
+        this.currentUser.setLastName(user.getLastName());
     }
 }

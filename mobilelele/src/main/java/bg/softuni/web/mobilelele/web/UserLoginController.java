@@ -25,7 +25,7 @@ public class UserLoginController {
 
     @PostMapping("/users/login")
     public String login(UserLoginBindingModel userLoginBindingModel) {
-        boolean loginSuccessfull = userService.login(new UserLoginServiceModel()
+        boolean loginSuccessfull = this.userService.login(new UserLoginServiceModel()
                 .setUsername(userLoginBindingModel.getUsername()).setRawPassword(userLoginBindingModel.getPassword()));
 
         LOGGER.info("User tried to login. User with name {} tried to login. Success = {}?",
