@@ -1,5 +1,6 @@
 package bg.softuni.web.mobilelele.web;
 
+<<<<<<< HEAD
 import bg.softuni.web.mobilelele.models.bindings.OfferUpdateBindingModel;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
@@ -17,15 +18,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+=======
+import bg.softuni.web.mobilelele.services.OfferService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+>>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
 
 @Controller
 public class OffersController {
     private final OfferService offerService;
+<<<<<<< HEAD
     private final ModelMapper modelMapper;
 
     public OffersController(OfferService offerService, ModelMapper modelMapper) {
         this.offerService = offerService;
         this.modelMapper = modelMapper;
+=======
+
+    public OffersController(OfferService offerService) {
+        this.offerService = offerService;
+>>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
     }
 
 
@@ -37,6 +51,7 @@ public class OffersController {
     }
 
     @GetMapping("/offers/{id}/details")
+<<<<<<< HEAD
     public String showOffer(@PathVariable Long id, Model model){
 
         OfferSummaryView offer = this.offerService.findById(id);
@@ -93,4 +108,9 @@ public class OffersController {
 
         return "redirect:/offers/" + id + "/details";
     }
+=======
+    public String showOffer(@PathVariable Long id){
+        return "details";
+    }
+>>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
 }

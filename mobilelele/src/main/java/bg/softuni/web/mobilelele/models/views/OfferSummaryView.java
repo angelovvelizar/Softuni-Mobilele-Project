@@ -10,7 +10,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
+<<<<<<< HEAD
 import java.time.Instant;
+=======
+>>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
 
 public class OfferSummaryView {
     private Long id;
@@ -22,6 +25,7 @@ public class OfferSummaryView {
     private Transmission transmission;
     private Integer year;
     private String model;
+<<<<<<< HEAD
     private Instant created;
     private Instant modified;
     private String seller;
@@ -34,6 +38,8 @@ public class OfferSummaryView {
     public void setBrand(String brand) {
         this.brand = brand;
     }
+=======
+>>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
 
     public Long getId() {
         return id;
@@ -43,6 +49,7 @@ public class OfferSummaryView {
         this.id = id;
     }
 
+<<<<<<< HEAD
     public Instant getCreated() {
         return created;
     }
@@ -67,6 +74,8 @@ public class OfferSummaryView {
         this.seller = seller;
     }
 
+=======
+>>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
     public String getDescription() {
         return description;
     }
