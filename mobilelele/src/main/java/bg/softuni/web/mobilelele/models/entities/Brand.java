@@ -10,17 +10,6 @@ public class Brand extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "brand",cascade = CascadeType.ALL)
-    private Set<Model> models;
-
-    public Set<Model> getModels() {
-        return models;
-    }
-
-    public void setModels(Set<Model> models) {
-        this.models = models;
-    }
-
     public String getName() {
         return name;
     }

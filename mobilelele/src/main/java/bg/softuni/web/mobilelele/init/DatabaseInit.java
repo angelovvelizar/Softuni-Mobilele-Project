@@ -1,5 +1,6 @@
 package bg.softuni.web.mobilelele.init;
 
+import bg.softuni.web.mobilelele.services.BrandService;
 import bg.softuni.web.mobilelele.services.ModelService;
 import bg.softuni.web.mobilelele.services.OfferService;
 import bg.softuni.web.mobilelele.services.UserService;
@@ -11,18 +12,22 @@ public class DatabaseInit implements CommandLineRunner {
     private final UserService userService;
     private final OfferService offerService;
     private final ModelService modelService;
+    private final BrandService brandService;
 
-    public DatabaseInit(UserService userService, OfferService offerService, ModelService modelService) {
+    public DatabaseInit(UserService userService, OfferService offerService, ModelService modelService, BrandService brandService) {
         this.userService = userService;
         this.offerService = offerService;
         this.modelService = modelService;
+        this.brandService = brandService;
     }
 
 
     @Override
     public void run(String... args) throws Exception {
         this.userService.initiliazeUsersAndRoles();
+        this.brandService.initiliazeBrands();
         this.modelService.initiliazeModels();
         this.offerService.initiliazeOffers();
+
     }
 }

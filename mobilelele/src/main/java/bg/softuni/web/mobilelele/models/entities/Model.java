@@ -24,7 +24,7 @@ public class Model extends BaseEntity{
     @Column(name = "end_year")
     private Integer endYear;
 
-    @ManyToOne(optional = false, cascade =  CascadeType.ALL)
+    @ManyToOne
     private Brand brand;
 
     public Brand getBrand() {

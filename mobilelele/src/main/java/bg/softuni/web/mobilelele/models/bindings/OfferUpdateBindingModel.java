@@ -1,39 +1,40 @@
-package bg.softuni.web.mobilelele.models.views;
+package bg.softuni.web.mobilelele.models.bindings;
 
-import bg.softuni.web.mobilelele.models.entities.Model;
-import bg.softuni.web.mobilelele.models.entities.User;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public class OfferSummaryView {
+public class OfferUpdateBindingModel {
+
     private Long id;
+
     private String description;
+
+    @NotNull
     private Engine engine;
+
     private String imageUrl;
+
+    @Min(0)
+    @NotNull
     private Long mileage;
+
+    @NotNull
+    @Min(100)
     private BigDecimal price;
+
+    @NotNull
     private Transmission transmission;
+
+    @NotNull
+    @Min(1930)
     private Integer year;
-    private String model;
-    private Instant created;
-    private Instant modified;
-    private String seller;
-    private String brand;
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
 
     public Long getId() {
         return id;
@@ -41,30 +42,6 @@ public class OfferSummaryView {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Instant getCreated() {
-        return created;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getModified() {
-        return modified;
-    }
-
-    public void setModified(Instant modified) {
-        this.modified = modified;
-    }
-
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
     }
 
     public String getDescription() {
@@ -121,13 +98,5 @@ public class OfferSummaryView {
 
     public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 }
