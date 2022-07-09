@@ -11,15 +11,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/offers")
 public class OffersController {
     private final OfferService offerService;
     private final ModelMapper modelMapper;
@@ -30,15 +28,14 @@ public class OffersController {
 
     }
 
-
-    @GetMapping("/offers/all")
+    @GetMapping("/all")
     public String allOffers(Model model) {
         model.addAttribute("offers",
                 this.offerService.getAllOffers());
         return "offers";
     }
 
-    @GetMapping("/offers/{id}/details")
+    @GetMapping("/{id}/details")
 
     public String showOffer(@PathVariable Long id, Model model) {
 
@@ -50,14 +47,14 @@ public class OffersController {
         return "details";
     }
 
-    @DeleteMapping("/offers/{id}")
+    @DeleteMapping("/{id}")
     public String deleteOffer(@PathVariable Long id) {
         this.offerService.deleteOffer(id);
 
         return "redirect:/offers/all";
     }
 
-    @GetMapping("/offers/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String editOffer(@PathVariable Long id, Model model) {
 
         OfferSummaryView offerSummaryView = this.offerService.findById(id);
@@ -71,7 +68,7 @@ public class OffersController {
         return "update";
     }
 
-    @GetMapping("/offers/{id}/edit/errors")
+    @GetMapping("/{id}/edit/errors")
     public String editOfferErrors(@PathVariable Long id, Model model) {
         model.addAttribute("engines", Engine.values());
         model.addAttribute("transmissions", Transmission.values());
@@ -79,7 +76,7 @@ public class OffersController {
         return "update";
     }
 
-    @PatchMapping("/offers/{id}/edit")
+    @PatchMapping("/{id}/edit")
     public String editOffer(@PathVariable Long id, @Valid OfferUpdateBindingModel offerModel,
                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 

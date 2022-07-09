@@ -25,14 +25,14 @@ public class ModelEntity extends BaseEntity{
     private Integer endYear;
 
     @ManyToOne
-    private BrandEntity brandEntity;
+    private BrandEntity brand;
 
     public BrandEntity getBrand() {
-        return brandEntity;
+        return brand;
     }
 
     public void setBrand(BrandEntity brandEntity) {
-        this.brandEntity = brandEntity;
+        this.brand = brandEntity;
     }
 
     public String getName() {

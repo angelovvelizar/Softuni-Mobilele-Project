@@ -34,7 +34,7 @@ public class OfferEntity extends BaseEntity{
     private Integer year;
 
     @ManyToOne
-    private ModelEntity modelEntity;
+    private ModelEntity model;
 
     @ManyToOne
     private UserEntity seller;
@@ -96,11 +96,11 @@ public class OfferEntity extends BaseEntity{
     }
 
     public ModelEntity getModel() {
-        return modelEntity;
+        return model;
     }
 
     public void setModel(ModelEntity modelEntity) {
-        this.modelEntity = modelEntity;
+        this.model = modelEntity;
     }
 
     public UserEntity getSeller() {
