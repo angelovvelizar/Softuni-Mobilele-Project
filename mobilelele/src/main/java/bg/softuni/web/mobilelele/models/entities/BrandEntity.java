@@ -1,11 +1,10 @@
 package bg.softuni.web.mobilelele.models.entities;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "brands")
-public class Brand extends BaseEntity {
+public class BrandEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String name;

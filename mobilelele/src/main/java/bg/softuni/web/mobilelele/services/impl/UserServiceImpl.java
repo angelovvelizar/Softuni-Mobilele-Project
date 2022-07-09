@@ -1,11 +1,12 @@
-package bg.softuni.web.mobilelele.services;
+package bg.softuni.web.mobilelele.services.impl;
 
-import bg.softuni.web.mobilelele.models.entities.User;
-import bg.softuni.web.mobilelele.models.entities.UserRole;
+import bg.softuni.web.mobilelele.models.entities.UserEntity;
+import bg.softuni.web.mobilelele.models.entities.UserRoleEntity;
 import bg.softuni.web.mobilelele.models.entities.enums.Role;
 import bg.softuni.web.mobilelele.models.service.UserRegisterServiceModel;
 import bg.softuni.web.mobilelele.repositories.UserRepository;
 import bg.softuni.web.mobilelele.repositories.UserRoleRepository;
+import bg.softuni.web.mobilelele.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     private void initiliazeUsers() {
         if (this.userRepository.count() == 0) {
-            User admin = new User();
+            UserEntity admin = new UserEntity();
             admin.setActive(true);
             admin.setUsername("admin");
             admin.setFirstName("Admincho");
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
             admin.setRoles(Set.of(this.userRoleRepository.findByRole(Role.ADMIN), this.userRoleRepository.findByRole(Role.USER)));
             this.userRepository.save(admin);
 
-            User georgi = new User();
+            UserEntity georgi = new UserEntity();
             georgi.setActive(true);
             georgi.setUsername("GeorgixxSlayer");
             georgi.setFirstName("Georgi");
@@ -59,29 +60,29 @@ public class UserServiceImpl implements UserService {
 
     private void initializeRoles() {
         if (this.userRoleRepository.count() == 0) {
-            UserRole adminRole = new UserRole();
+            UserRoleEntity adminRole = new UserRoleEntity();
             adminRole.setRole(Role.ADMIN);
 
-            UserRole userRole = new UserRole();
-            userRole.setRole(Role.USER);
+            UserRoleEntity userRoleEntity = new UserRoleEntity();
+            userRoleEntity.setRole(Role.USER);
 
-            this.userRoleRepository.saveAll(List.of(adminRole, userRole));
+            this.userRoleRepository.saveAll(List.of(adminRole, userRoleEntity));
         }
     }
 
     @Override
     public void registerAndLoginUser(UserRegisterServiceModel userRegisterServiceModel) {
-        User newUser = new User();
-        UserRole userRole = this.userRoleRepository.findByRole(Role.USER);
+        UserEntity newUserEntity = new UserEntity();
+        UserRoleEntity userRoleEntity = this.userRoleRepository.findByRole(Role.USER);
 
-        newUser.setUsername(userRegisterServiceModel.getUsername());
-        newUser.setFirstName(userRegisterServiceModel.getFirstName());
-        newUser.setLastName(userRegisterServiceModel.getLastName());
-        newUser.setPassword(this.passwordEncoder.encode(userRegisterServiceModel.getPassword()));
-        newUser.setActive(true);
-        newUser.setRoles(Set.of(userRole));
+        newUserEntity.setUsername(userRegisterServiceModel.getUsername());
+        newUserEntity.setFirstName(userRegisterServiceModel.getFirstName());
+        newUserEntity.setLastName(userRegisterServiceModel.getLastName());
+        newUserEntity.setPassword(this.passwordEncoder.encode(userRegisterServiceModel.getPassword()));
+        newUserEntity.setActive(true);
+        newUserEntity.setRoles(Set.of(userRoleEntity));
 
-        this.userRepository.save(newUser);
+        this.userRepository.save(newUserEntity);
 
         //todo: register user
         /*login(newUser);*/

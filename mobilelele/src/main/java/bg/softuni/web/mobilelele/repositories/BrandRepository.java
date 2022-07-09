@@ -1,11 +1,11 @@
 package bg.softuni.web.mobilelele.repositories;
 
-import bg.softuni.web.mobilelele.models.entities.Brand;
+import bg.softuni.web.mobilelele.models.entities.BrandEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BrandRepository extends JpaRepository<Brand, Long> {
+public interface BrandRepository extends JpaRepository<BrandEntity, Long> {
 
-    Brand findBrandByName(String name);
+    BrandEntity findBrandByName(String name);
 }

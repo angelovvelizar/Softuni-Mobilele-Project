@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "models")
-public class Model extends BaseEntity{
+public class ModelEntity extends BaseEntity{
 
     @Column(nullable = false)
     private String name;
@@ -25,14 +25,14 @@ public class Model extends BaseEntity{
     private Integer endYear;
 
     @ManyToOne
-    private Brand brand;
+    private BrandEntity brandEntity;
 
-    public Brand getBrand() {
-        return brand;
+    public BrandEntity getBrand() {
+        return brandEntity;
     }
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
+    public void setBrand(BrandEntity brandEntity) {
+        this.brandEntity = brandEntity;
     }
 
     public String getName() {

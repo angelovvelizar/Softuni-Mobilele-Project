@@ -1,14 +1,8 @@
 package bg.softuni.web.mobilelele.models.views;
 
-import bg.softuni.web.mobilelele.models.entities.Model;
-import bg.softuni.web.mobilelele.models.entities.User;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 import java.time.Instant;

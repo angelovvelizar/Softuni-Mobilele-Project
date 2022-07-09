@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "offers")
-public class Offer extends BaseEntity{
+public class OfferEntity extends BaseEntity{
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -34,10 +34,10 @@ public class Offer extends BaseEntity{
     private Integer year;
 
     @ManyToOne
-    private Model model;
+    private ModelEntity modelEntity;
 
     @ManyToOne
-    private User seller;
+    private UserEntity seller;
 
     public String getDescription() {
         return description;
@@ -95,19 +95,19 @@ public class Offer extends BaseEntity{
         this.year = year;
     }
 
-    public Model getModel() {
-        return model;
+    public ModelEntity getModel() {
+        return modelEntity;
     }
 
-    public void setModel(Model model) {
-        this.model = model;
+    public void setModel(ModelEntity modelEntity) {
+        this.modelEntity = modelEntity;
     }
 
-    public User getSeller() {
+    public UserEntity getSeller() {
         return seller;
     }
 
-    public void setSeller(User seller) {
+    public void setSeller(UserEntity seller) {
         this.seller = seller;
     }
 }
