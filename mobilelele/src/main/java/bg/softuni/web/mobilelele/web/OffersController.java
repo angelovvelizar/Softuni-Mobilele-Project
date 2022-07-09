@@ -1,6 +1,6 @@
 package bg.softuni.web.mobilelele.web;
 
-<<<<<<< HEAD
+
 import bg.softuni.web.mobilelele.models.bindings.OfferUpdateBindingModel;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
@@ -18,41 +18,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-=======
-import bg.softuni.web.mobilelele.services.OfferService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
 
 @Controller
 public class OffersController {
     private final OfferService offerService;
-<<<<<<< HEAD
     private final ModelMapper modelMapper;
 
     public OffersController(OfferService offerService, ModelMapper modelMapper) {
         this.offerService = offerService;
         this.modelMapper = modelMapper;
-=======
 
-    public OffersController(OfferService offerService) {
-        this.offerService = offerService;
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
     }
 
 
     @GetMapping("/offers/all")
-    public String allOffers(Model model){
+    public String allOffers(Model model) {
         model.addAttribute("offers",
                 this.offerService.getAllOffers());
         return "offers";
     }
 
     @GetMapping("/offers/{id}/details")
-<<<<<<< HEAD
-    public String showOffer(@PathVariable Long id, Model model){
+
+    public String showOffer(@PathVariable Long id, Model model) {
 
         OfferSummaryView offer = this.offerService.findById(id);
         model.addAttribute("offer", offer);
@@ -63,14 +51,14 @@ public class OffersController {
     }
 
     @DeleteMapping("/offers/{id}")
-    public String deleteOffer(@PathVariable Long id){
+    public String deleteOffer(@PathVariable Long id) {
         this.offerService.deleteOffer(id);
 
         return "redirect:/offers/all";
     }
 
     @GetMapping("/offers/{id}/edit")
-    public String editOffer(@PathVariable Long id, Model model){
+    public String editOffer(@PathVariable Long id, Model model) {
 
         OfferSummaryView offerSummaryView = this.offerService.findById(id);
 
@@ -84,7 +72,7 @@ public class OffersController {
     }
 
     @GetMapping("/offers/{id}/edit/errors")
-    public String editOfferErrors(@PathVariable Long id, Model model){
+    public String editOfferErrors(@PathVariable Long id, Model model) {
         model.addAttribute("engines", Engine.values());
         model.addAttribute("transmissions", Transmission.values());
 
@@ -93,9 +81,9 @@ public class OffersController {
 
     @PatchMapping("/offers/{id}/edit")
     public String editOffer(@PathVariable Long id, @Valid OfferUpdateBindingModel offerModel,
-                            BindingResult bindingResult, RedirectAttributes redirectAttributes){
+                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("offerModel", offerModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel", bindingResult);
 
@@ -108,9 +96,10 @@ public class OffersController {
 
         return "redirect:/offers/" + id + "/details";
     }
-=======
-    public String showOffer(@PathVariable Long id){
+
+    public String showOffer(@PathVariable Long id) {
         return "details";
     }
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
+
 }
+

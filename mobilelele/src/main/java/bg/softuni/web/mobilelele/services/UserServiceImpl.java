@@ -3,36 +3,31 @@ package bg.softuni.web.mobilelele.services;
 import bg.softuni.web.mobilelele.models.entities.User;
 import bg.softuni.web.mobilelele.models.entities.UserRole;
 import bg.softuni.web.mobilelele.models.entities.enums.Role;
-import bg.softuni.web.mobilelele.models.service.UserLoginServiceModel;
 import bg.softuni.web.mobilelele.models.service.UserRegisterServiceModel;
 import bg.softuni.web.mobilelele.repositories.UserRepository;
 import bg.softuni.web.mobilelele.repositories.UserRoleRepository;
-import bg.softuni.web.mobilelele.user.CurrentUser;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final CurrentUser currentUser;
     private final UserRoleRepository userRoleRepository;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, CurrentUser currentUser, UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleRepository userRoleRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
-        this.currentUser = currentUser;
         this.userRoleRepository = userRoleRepository;
     }
 
 
     @Override
-    public void initiliazeUsersAndRoles() {
-        initiliazeRoles();
+    public void initializeUsersAndRoles() {
+        initializeRoles();
         initiliazeUsers();
 
     }
@@ -62,7 +57,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void initiliazeRoles() {
+    private void initializeRoles() {
         if (this.userRoleRepository.count() == 0) {
             UserRole adminRole = new UserRole();
             adminRole.setRole(Role.ADMIN);
@@ -72,34 +67,6 @@ public class UserServiceImpl implements UserService {
 
             this.userRoleRepository.saveAll(List.of(adminRole, userRole));
         }
-    }
-
-
-    @Override
-    public boolean login(UserLoginServiceModel userLoginServiceModel) {
-        Optional<User> userEntityOpt = userRepository.findUserByUsername(userLoginServiceModel.getUsername());
-
-        if (userEntityOpt.isEmpty()) {
-            logout();
-            return false;
-        } else {
-            boolean success = passwordEncoder
-                    .matches(userLoginServiceModel.getRawPassword(), userEntityOpt.get().getPassword());
-
-            if (success) {
-                User loggedInUser = userEntityOpt.get();
-                login(loggedInUser);
-                loggedInUser.getRoles()
-                        .forEach(r -> this.currentUser.addRole(r.getRole()));
-            }
-
-            return success;
-        }
-    }
-
-    @Override
-    public void logout() {
-        this.currentUser.clean();
     }
 
     @Override
@@ -115,7 +82,9 @@ public class UserServiceImpl implements UserService {
         newUser.setRoles(Set.of(userRole));
 
         this.userRepository.save(newUser);
-        login(newUser);
+
+        //todo: register user
+        /*login(newUser);*/
     }
 
     @Override
@@ -123,10 +92,4 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findUserByUsernameIgnoreCase(username).isEmpty();
     }
 
-    private void login(User user) {
-        this.currentUser.setUsername(user.getUsername());
-        this.currentUser.setLogged(true);
-        this.currentUser.setFirstName(user.getFirstName());
-        this.currentUser.setLastName(user.getLastName());
-    }
 }

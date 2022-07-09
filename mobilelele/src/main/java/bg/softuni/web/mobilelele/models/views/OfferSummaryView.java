@@ -10,10 +10,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
-<<<<<<< HEAD
+
 import java.time.Instant;
-=======
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
 
 public class OfferSummaryView {
     private Long id;
@@ -25,21 +23,10 @@ public class OfferSummaryView {
     private Transmission transmission;
     private Integer year;
     private String model;
-<<<<<<< HEAD
     private Instant created;
     private Instant modified;
     private String seller;
     private String brand;
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-=======
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
 
     public Long getId() {
         return id;
@@ -49,33 +36,6 @@ public class OfferSummaryView {
         this.id = id;
     }
 
-<<<<<<< HEAD
-    public Instant getCreated() {
-        return created;
-    }
-
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
-    public Instant getModified() {
-        return modified;
-    }
-
-    public void setModified(Instant modified) {
-        this.modified = modified;
-    }
-
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
-    }
-
-=======
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
     public String getDescription() {
         return description;
     }
@@ -138,5 +98,37 @@ public class OfferSummaryView {
 
     public void setModel(String model) {
         this.model = model;
+    }
+
+    public Instant getCreated() {
+        return created;
+    }
+
+    public void setCreated(Instant created) {
+        this.created = created;
+    }
+
+    public Instant getModified() {
+        return modified;
+    }
+
+    public void setModified(Instant modified) {
+        this.modified = modified;
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

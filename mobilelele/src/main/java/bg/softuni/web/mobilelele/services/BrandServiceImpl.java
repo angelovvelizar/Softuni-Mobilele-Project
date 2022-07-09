@@ -16,7 +16,7 @@ public class BrandServiceImpl implements BrandService {
 
 
     @Override
-    public void initiliazeBrands() {
+    public void initializeBrands() {
 
         if(this.brandRepository.count() == 0) {
             Brand brand1 = new Brand();

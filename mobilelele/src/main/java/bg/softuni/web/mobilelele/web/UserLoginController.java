@@ -23,18 +23,9 @@ public class UserLoginController {
         return "auth-login";
     }
 
-    @PostMapping("/users/login")
+    /*@PostMapping("/users/login")
     public String login(UserLoginBindingModel userLoginBindingModel) {
-        boolean loginSuccessfull = this.userService.login(new UserLoginServiceModel()
-                .setUsername(userLoginBindingModel.getUsername()).setRawPassword(userLoginBindingModel.getPassword()));
-
-        LOGGER.info("User tried to login. User with name {} tried to login. Success = {}?",
-                userLoginBindingModel.getUsername(), loginSuccessfull);
-
-        if(loginSuccessfull){
-            return "redirect:/";
-        }
 
         return "redirect:/users/login";
-    }
+    }*/
 }

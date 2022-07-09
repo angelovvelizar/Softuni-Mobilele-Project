@@ -1,6 +1,5 @@
 package bg.softuni.web.mobilelele.services;
 
-<<<<<<< HEAD
 import bg.softuni.web.mobilelele.models.entities.Model;
 import bg.softuni.web.mobilelele.models.entities.enums.Category;
 import bg.softuni.web.mobilelele.repositories.BrandRepository;
@@ -12,27 +11,17 @@ import java.util.List;
 @Service
 public class ModelServiceImpl implements ModelService {
     private final ModelRepository modelRepository;
+
     private final BrandRepository brandRepository;
 
     public ModelServiceImpl(ModelRepository modelRepository, BrandRepository brandRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
-=======
-import bg.softuni.web.mobilelele.repositories.ModelRepository;
-import org.springframework.stereotype.Service;
-
-@Service
-public class ModelServiceImpl implements ModelService {
-    private final ModelRepository modelRepository;
-
-    public ModelServiceImpl(ModelRepository modelRepository) {
-        this.modelRepository = modelRepository;
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
     }
 
     @Override
-    public void initiliazeModels() {
-<<<<<<< HEAD
+    public void initializeModels() {
+
 
         if(this.modelRepository.count() == 0){
             Model model1 = new Model();
@@ -61,8 +50,8 @@ public class ModelServiceImpl implements ModelService {
 
             this.modelRepository.saveAll(List.of(model1, model2, model3));
         }
-=======
+
         //TODO: add offers
->>>>>>> 150fdacf9bc2b61e2a16c7b8093b5a0954a0dceb
+
     }
 }
