@@ -94,6 +94,13 @@ public class OffersController {
         return "redirect:/offers/" + id + "/details";
     }
 
+    @GetMapping("/add")
+    public String addOffer(){
+        return "offer-add";
+    }
+
+
+
     public String showOffer(@PathVariable Long id) {
         return "details";
     }

@@ -37,7 +37,7 @@ public class ApplicationSecurityConfiguration {
                 .failureForwardUrl("/users/login-error")
         .and()
                 .logout()
-                .logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID");
+                .logoutUrl("/users/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
 
 
