@@ -40,7 +40,6 @@ public class ApplicationSecurityConfiguration {
                 .logoutUrl("/users/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("JSESSIONID");
 
 
-
         return http.build();
     }
 

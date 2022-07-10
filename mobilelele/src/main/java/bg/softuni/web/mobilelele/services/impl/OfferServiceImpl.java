@@ -1,9 +1,11 @@
 package bg.softuni.web.mobilelele.services.impl;
 
 import bg.softuni.web.mobilelele.models.bindings.OfferAddBindingModel;
+import bg.softuni.web.mobilelele.models.entities.ModelEntity;
 import bg.softuni.web.mobilelele.models.entities.OfferEntity;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
+import bg.softuni.web.mobilelele.models.service.OfferAddServiceModel;
 import bg.softuni.web.mobilelele.models.service.OfferUpdateServiceModel;
 import bg.softuni.web.mobilelele.models.views.OfferSummaryView;
 import bg.softuni.web.mobilelele.repositories.ModelRepository;
@@ -17,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.security.Principal;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -99,10 +103,17 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void addOffer(OfferAddBindingModel offerAddBindingModel) {
-        OfferEntity offer = this.modelMapper.map(offerAddBindingModel, OfferEntity.class);
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //TODO:add offer in repository
+    public OfferAddServiceModel addOffer(OfferAddBindingModel offerAddBindingModel, Principal principal) {
+        OfferAddServiceModel offerAddServiceModel = this.modelMapper.map(offerAddBindingModel, OfferAddServiceModel.class);
+        OfferEntity newOffer = this.modelMapper.map(offerAddServiceModel,OfferEntity.class);
+        newOffer.setCreated(Instant.now());
+        newOffer.setSeller(this.userRepository.findUserByUsername(principal.getName()).orElseThrow());
+
+        ModelEntity model = this.modelRepository.findByName(offerAddBindingModel.getModel().getName());
+        newOffer.setModel(model);
+
+        OfferEntity savedOffer = this.offerRepository.save(newOffer);
+        return this.modelMapper.map(savedOffer,OfferAddServiceModel.class);
     }
 
     private OfferSummaryView map(OfferEntity offerEntity){

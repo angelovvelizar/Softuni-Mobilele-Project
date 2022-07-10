@@ -5,6 +5,7 @@ import bg.softuni.web.mobilelele.models.bindings.OfferAddBindingModel;
 import bg.softuni.web.mobilelele.models.bindings.OfferUpdateBindingModel;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
+import bg.softuni.web.mobilelele.models.service.OfferAddServiceModel;
 import bg.softuni.web.mobilelele.models.service.OfferUpdateServiceModel;
 import bg.softuni.web.mobilelele.models.views.ModelView;
 import bg.softuni.web.mobilelele.models.views.OfferSummaryView;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -111,7 +113,8 @@ public class OffersController {
 
     @PostMapping("/add")
     public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
-                           BindingResult bindingResult, RedirectAttributes redirectAttributes){
+                           BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                           Principal principal){
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("offerAddBindingModel", offerAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerAddBindingModel", bindingResult);
@@ -119,9 +122,9 @@ public class OffersController {
             return "redirect:add";
         }
 
-        this.offerService.addOffer(offerAddBindingModel);
+        OfferAddServiceModel offerAddServiceModel = this.offerService.addOffer(offerAddBindingModel, principal);
 
-        return "redirect:all";
+        return "redirect:/" + offerAddServiceModel.getId() + "/details";
     }
 
     public String showOffer(@PathVariable Long id) {

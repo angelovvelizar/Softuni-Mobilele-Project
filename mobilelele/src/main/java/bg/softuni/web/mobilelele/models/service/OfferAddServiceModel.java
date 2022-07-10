@@ -1,32 +1,20 @@
-package bg.softuni.web.mobilelele.models.bindings;
+package bg.softuni.web.mobilelele.models.service;
 
-import bg.softuni.web.mobilelele.models.entities.ModelEntity;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
-public class OfferAddBindingModel {
-
+public class OfferAddServiceModel {
     private Long id;
-    @NotBlank
     private String description;
-    @NotNull
     private Engine engine;
-    @NotBlank
     private String imageUrl;
-    @NotNull
     private Long mileage;
-    @NotNull
     private BigDecimal price;
-    @NotNull
     private Transmission transmission;
-    @NotNull
     private Integer year;
-    @NotNull
-    private ModelEntity model;
 
     public Long getId() {
         return id;
@@ -90,13 +78,5 @@ public class OfferAddBindingModel {
 
     public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public ModelEntity getModel() {
-        return model;
-    }
-
-    public void setModel(ModelEntity model) {
-        this.model = model;
     }
 }
