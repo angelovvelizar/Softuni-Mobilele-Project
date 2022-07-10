@@ -26,7 +26,6 @@
                         th:field="*{model}"
                         th:errorclass="is-invalid"
                         id="modelEntity" class="form-control">
-                    <option value="">- Select a model -</option>
                     <optgroup label="Model name">
                         <option th:each="m : ${models}" th:text="${m.getName()}" th:value="${m}">Model</option>
                     </optgroup>
@@ -54,7 +53,6 @@
                         th:field="*{engine}"
                         th:errorclass="is-invalid"
                         id="engine" class="form-control">
-                    <option value="">- Select engine type -</option>
                     <option th:each="e : ${T(bg.softuni.web.mobilelele.models.entities.enums.Engine).values()}" th:text="${e}" th:value="${e}">
                         Engine type
                     </option>
@@ -69,7 +67,6 @@
                         th:field="*{transmission}"
                         th:errorclass="is-invalid"
                         id="transmission" class="form-control">
-                    <option value="">- Select transmission type -</option>
                     <option th:each="t : ${T(bg.softuni.web.mobilelele.models.entities.enums.Transmission).values()}" th:text="${t}" th:value="${t}"> Transmission type
                     </option>
                 </select>
