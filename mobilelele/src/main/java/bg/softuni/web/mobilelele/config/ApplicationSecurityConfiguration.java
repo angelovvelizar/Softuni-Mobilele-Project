@@ -28,6 +28,7 @@ public class ApplicationSecurityConfiguration {
                 .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/users/login", "/users/register").permitAll()
+                .antMatchers("/statistics").hasRole(Role.ADMIN.name())
                 .antMatchers("/**").authenticated()
         .and()
                 .formLogin().loginPage("/users/login")
