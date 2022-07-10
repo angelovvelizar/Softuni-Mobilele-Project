@@ -33,7 +33,7 @@ public class OfferEntity extends BaseEntity{
     @Column(nullable = false)
     private Integer year;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private ModelEntity model;
 
     @ManyToOne

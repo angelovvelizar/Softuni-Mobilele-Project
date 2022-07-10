@@ -1,11 +1,14 @@
 package bg.softuni.web.mobilelele.web;
 
 
+import bg.softuni.web.mobilelele.models.bindings.OfferAddBindingModel;
 import bg.softuni.web.mobilelele.models.bindings.OfferUpdateBindingModel;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
 import bg.softuni.web.mobilelele.models.service.OfferUpdateServiceModel;
+import bg.softuni.web.mobilelele.models.views.ModelView;
 import bg.softuni.web.mobilelele.models.views.OfferSummaryView;
+import bg.softuni.web.mobilelele.services.ModelService;
 import bg.softuni.web.mobilelele.services.OfferService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -15,17 +18,20 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/offers")
 public class OffersController {
     private final OfferService offerService;
     private final ModelMapper modelMapper;
+    private final ModelService modelService;
 
-    public OffersController(OfferService offerService, ModelMapper modelMapper) {
+    public OffersController(OfferService offerService, ModelMapper modelMapper, ModelService modelService) {
         this.offerService = offerService;
         this.modelMapper = modelMapper;
 
+        this.modelService = modelService;
     }
 
     @GetMapping("/all")
@@ -51,7 +57,7 @@ public class OffersController {
     public String deleteOffer(@PathVariable Long id) {
         this.offerService.deleteOffer(id);
 
-        return "redirect:/offers/all";
+        return "redirect:all";
     }
 
     @GetMapping("/{id}/edit")
@@ -84,25 +90,47 @@ public class OffersController {
             redirectAttributes.addFlashAttribute("offerModel", offerModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerModel", bindingResult);
 
-            return "redirect:/offers/" + id + "/edit/errors";
+            return "redirect:/" + id + "/edit/errors";
         }
 
         OfferUpdateServiceModel serviceModel = this.modelMapper.map(offerModel, OfferUpdateServiceModel.class);
         this.offerService.updateOffer(serviceModel);
         serviceModel.setId(id);
 
-        return "redirect:/offers/" + id + "/details";
+        return "redirect:/" + id + "/details";
     }
 
     @GetMapping("/add")
-    public String addOffer(){
+    public String addOffer(Model model){
+
+        List<ModelView> models= this.modelService.getModels();
+        model.addAttribute("models", models);
         return "offer-add";
     }
 
 
+    @PostMapping("/add")
+    public String addOffer(@Valid OfferAddBindingModel offerAddBindingModel,
+                           BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("offerAddBindingModel", offerAddBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.offerAddBindingModel", bindingResult);
+
+            return "redirect:add";
+        }
+
+        this.offerService.addOffer(offerAddBindingModel);
+
+        return "redirect:all";
+    }
 
     public String showOffer(@PathVariable Long id) {
         return "details";
+    }
+
+    @ModelAttribute
+    public OfferAddBindingModel offerAddBindingModel(){
+        return  new OfferAddBindingModel();
     }
 
 }

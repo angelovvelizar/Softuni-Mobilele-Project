@@ -1,5 +1,6 @@
 package bg.softuni.web.mobilelele.services;
 
+import bg.softuni.web.mobilelele.models.bindings.OfferAddBindingModel;
 import bg.softuni.web.mobilelele.models.service.OfferUpdateServiceModel;
 import bg.softuni.web.mobilelele.models.views.OfferSummaryView;
 
@@ -16,4 +17,6 @@ public interface OfferService {
     void deleteOffer(Long id);
 
     void updateOffer(OfferUpdateServiceModel offerModel);
+
+    void addOffer(OfferAddBindingModel offerAddBindingModel);
 }

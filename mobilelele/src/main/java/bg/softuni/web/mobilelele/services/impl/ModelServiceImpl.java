@@ -2,22 +2,27 @@ package bg.softuni.web.mobilelele.services.impl;
 
 import bg.softuni.web.mobilelele.models.entities.ModelEntity;
 import bg.softuni.web.mobilelele.models.entities.enums.Category;
+import bg.softuni.web.mobilelele.models.views.ModelView;
 import bg.softuni.web.mobilelele.repositories.BrandRepository;
 import bg.softuni.web.mobilelele.repositories.ModelRepository;
 import bg.softuni.web.mobilelele.services.ModelService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ModelServiceImpl implements ModelService {
     private final ModelRepository modelRepository;
 
     private final BrandRepository brandRepository;
+    private final ModelMapper modelMapper;
 
-    public ModelServiceImpl(ModelRepository modelRepository, BrandRepository brandRepository) {
+    public ModelServiceImpl(ModelRepository modelRepository, BrandRepository brandRepository, ModelMapper modelMapper) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -54,5 +59,12 @@ public class ModelServiceImpl implements ModelService {
 
         //TODO: add offers
 
+    }
+
+    @Override
+    public List<ModelView> getModels() {
+        return this.modelRepository.findAll()
+                .stream().map(modelEntity -> this.modelMapper.map(modelEntity,ModelView.class))
+                .collect(Collectors.toList());
     }
 }
