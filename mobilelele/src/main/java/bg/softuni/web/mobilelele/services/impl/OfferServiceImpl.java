@@ -109,7 +109,7 @@ public class OfferServiceImpl implements OfferService {
         newOffer.setCreated(Instant.now());
         newOffer.setSeller(this.userRepository.findUserByUsername(principal.getName()).orElseThrow());
 
-        ModelEntity model = this.modelRepository.findByName(offerAddBindingModel.getModel().getName());
+        ModelEntity model = this.modelRepository.findByName(offerAddBindingModel.getModel());
         newOffer.setModel(model);
 
         OfferEntity savedOffer = this.offerRepository.save(newOffer);

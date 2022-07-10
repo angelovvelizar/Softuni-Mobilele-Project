@@ -124,7 +124,7 @@ public class OffersController {
 
         OfferAddServiceModel offerAddServiceModel = this.offerService.addOffer(offerAddBindingModel, principal);
 
-        return "redirect:/" + offerAddServiceModel.getId() + "/details";
+        return "redirect:/offers/" + offerAddServiceModel.getId() + "/details";
     }
 
     public String showOffer(@PathVariable Long id) {

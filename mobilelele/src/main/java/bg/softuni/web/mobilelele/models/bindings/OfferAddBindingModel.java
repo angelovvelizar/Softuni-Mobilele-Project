@@ -26,7 +26,7 @@ public class OfferAddBindingModel {
     @NotNull
     private Integer year;
     @NotNull
-    private ModelEntity model;
+    private String model;
 
     public Long getId() {
         return id;
@@ -92,11 +92,11 @@ public class OfferAddBindingModel {
         this.year = year;
     }
 
-    public ModelEntity getModel() {
+    public String getModel() {
         return model;
     }
 
-    public void setModel(ModelEntity model) {
+    public void setModel(String model) {
         this.model = model;
     }
 }

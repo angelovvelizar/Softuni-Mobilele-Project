@@ -1,8 +1,8 @@
 package bg.softuni.web.mobilelele.models.service;
 
+import bg.softuni.web.mobilelele.models.entities.ModelEntity;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
-
 
 import java.math.BigDecimal;
 
@@ -15,6 +15,7 @@ public class OfferAddServiceModel {
     private BigDecimal price;
     private Transmission transmission;
     private Integer year;
+    private ModelEntity model;
 
     public Long getId() {
         return id;
@@ -78,5 +79,13 @@ public class OfferAddServiceModel {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public ModelEntity getModel() {
+        return model;
+    }
+
+    public void setModel(ModelEntity model) {
+        this.model = model;
     }
 }
