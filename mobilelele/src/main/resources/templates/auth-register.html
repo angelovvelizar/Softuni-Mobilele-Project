@@ -64,7 +64,7 @@
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
-                <label for="password" class="text-white font-weight-bold">Password</label>
+                <label for="confirmPassword" class="text-white font-weight-bold">Password</label>
                 <input
                         th:field="*{confirmPassword}"
                         th:errorclass="is-invalid"
@@ -72,6 +72,10 @@
                         placeholder="Confirm Password"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     Confirm Password is required.
+                </p>
+
+                <p th:if="${passwordsNotMatching}" class="errors alert alert-danger">
+                    Passwords not matching!
                 </p>
             </div>
         </div>

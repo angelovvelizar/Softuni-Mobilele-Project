@@ -31,6 +31,7 @@ public class UserRegistrationController {
 
     @GetMapping("/users/register")
     public String registerUser() {
+
         return "auth-register";
     }
 
@@ -39,9 +40,16 @@ public class UserRegistrationController {
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes) {
 
-        if(bindingResult.hasErrors() || !userModel.getPassword().equals(userModel.getConfirmPassword())){
+        if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("userModel", userModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userModel", bindingResult);
+
+            return "redirect:/users/register";
+        }
+
+        if(!userModel.getPassword().equals(userModel.getConfirmPassword())){
+            redirectAttributes.addFlashAttribute("userModel", userModel);
+            redirectAttributes.addFlashAttribute("passwordsNotMatching", true);
 
             return "redirect:/users/register";
         }
