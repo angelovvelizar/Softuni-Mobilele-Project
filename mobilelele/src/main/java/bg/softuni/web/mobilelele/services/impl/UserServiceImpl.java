@@ -7,6 +7,11 @@ import bg.softuni.web.mobilelele.models.service.UserRegisterServiceModel;
 import bg.softuni.web.mobilelele.repositories.UserRepository;
 import bg.softuni.web.mobilelele.repositories.UserRoleRepository;
 import bg.softuni.web.mobilelele.services.UserService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +23,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final UserDetailsService userDetailsService;
 
-    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, UserRoleRepository userRoleRepository, UserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.userDetailsService = userDetailsService;
     }
 
 
@@ -84,8 +91,14 @@ public class UserServiceImpl implements UserService {
 
         this.userRepository.save(newUserEntity);
 
-        //todo: register user
-        /*login(newUser);*/
+        UserDetails principal = userDetailsService.loadUserByUsername(newUserEntity.getUsername());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                principal,
+                newUserEntity.getPassword(),
+                principal.getAuthorities()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     @Override

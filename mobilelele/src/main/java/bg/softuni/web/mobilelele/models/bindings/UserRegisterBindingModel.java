@@ -15,6 +15,9 @@ public class UserRegisterBindingModel {
     @NotNull
     private String password;
 
+    @NotNull
+    private String confirmPassword;
+
     public String getFirstName() {
         return firstName;
     }
@@ -45,5 +48,13 @@ public class UserRegisterBindingModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }
