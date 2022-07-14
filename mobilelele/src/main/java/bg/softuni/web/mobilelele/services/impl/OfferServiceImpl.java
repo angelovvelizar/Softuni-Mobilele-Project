@@ -3,7 +3,10 @@ package bg.softuni.web.mobilelele.services.impl;
 import bg.softuni.web.mobilelele.models.bindings.OfferAddBindingModel;
 import bg.softuni.web.mobilelele.models.entities.ModelEntity;
 import bg.softuni.web.mobilelele.models.entities.OfferEntity;
+import bg.softuni.web.mobilelele.models.entities.UserEntity;
+import bg.softuni.web.mobilelele.models.entities.UserRoleEntity;
 import bg.softuni.web.mobilelele.models.entities.enums.Engine;
+import bg.softuni.web.mobilelele.models.entities.enums.Role;
 import bg.softuni.web.mobilelele.models.entities.enums.Transmission;
 import bg.softuni.web.mobilelele.models.service.OfferAddServiceModel;
 import bg.softuni.web.mobilelele.models.service.OfferUpdateServiceModel;
@@ -22,6 +25,7 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,6 +86,23 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void deleteOffer(Long id) {
         this.offerRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isOwner(String username, Long id) {
+        Optional<OfferEntity> offerOpt = this.offerRepository.findById(id);
+        Optional<UserEntity> caller = this.userRepository.findUserByUsername(username);
+
+        if(offerOpt.isEmpty() || caller.isEmpty()){
+            return false;
+        }
+
+        OfferEntity offerEntity = offerOpt.get();
+        return isAdmin(caller.get()) || offerEntity.getSeller().getUsername().equalsIgnoreCase(username);
+    }
+
+    private boolean isAdmin(UserEntity userEntity){
+        return userEntity.getRoles().stream().map(UserRoleEntity::getRole).anyMatch(r -> r == Role.ADMIN);
     }
 
     @Override
