@@ -22,6 +22,16 @@ public class OfferSummaryView {
     private String seller;
     private String brand;
 
+    private boolean canDelete;
+
+    public boolean isCanDelete() {
+        return canDelete;
+    }
+
+    public void setCanDelete(boolean canDelete) {
+        this.canDelete = canDelete;
+    }
+
     public Long getId() {
         return id;
     }

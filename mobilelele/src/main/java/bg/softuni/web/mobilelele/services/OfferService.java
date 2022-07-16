@@ -14,7 +14,7 @@ public interface OfferService {
 
     List<OfferSummaryView> getAllOffers();
 
-    OfferSummaryView findById(Long id);
+    OfferSummaryView findById(Long id, String currentUser);
 
     void deleteOffer(Long id);
 

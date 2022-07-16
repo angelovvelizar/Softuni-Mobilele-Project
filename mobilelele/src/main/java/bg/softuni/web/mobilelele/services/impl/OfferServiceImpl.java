@@ -17,8 +17,6 @@ import bg.softuni.web.mobilelele.repositories.UserRepository;
 import bg.softuni.web.mobilelele.services.OfferService;
 import bg.softuni.web.mobilelele.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -73,14 +71,14 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<OfferSummaryView> getAllOffers() {
         return this.offerRepository.findAll().stream()
-                .map(this::map).collect(Collectors.toList());
+                .map(this::mapWithoutCurrentUser).collect(Collectors.toList());
     }
 
 
     @Override
-    public OfferSummaryView findById(Long id) {
+    public OfferSummaryView findById(Long id, String currentUser) {
         return this.offerRepository.findById(id)
-                .map(this::map).orElse(null);
+                .map(offerEntity -> map(currentUser, offerEntity)).orElse(null);
     }
 
     @Override
@@ -137,7 +135,17 @@ public class OfferServiceImpl implements OfferService {
         return this.modelMapper.map(savedOffer,OfferAddServiceModel.class);
     }
 
-    private OfferSummaryView map(OfferEntity offerEntity){
+    private OfferSummaryView map(String currentUser, OfferEntity offerEntity){
+        OfferSummaryView summaryView = this.modelMapper.map(offerEntity,OfferSummaryView.class);
+        summaryView.setCanDelete(isOwner(currentUser, offerEntity.getId()));
+        summaryView.setModel(offerEntity.getModel().getName());
+        summaryView.setSeller(String.join(" ", offerEntity.getSeller().getFirstName(), offerEntity.getSeller().getLastName()));
+        summaryView.setBrand(offerEntity.getModel().getBrand().getName());
+
+        return summaryView;
+    }
+
+    private OfferSummaryView mapWithoutCurrentUser(OfferEntity offerEntity){
         OfferSummaryView summaryView = this.modelMapper.map(offerEntity,OfferSummaryView.class);
         summaryView.setModel(offerEntity.getModel().getName());
         summaryView.setSeller(String.join(" ", offerEntity.getSeller().getFirstName(), offerEntity.getSeller().getLastName()));

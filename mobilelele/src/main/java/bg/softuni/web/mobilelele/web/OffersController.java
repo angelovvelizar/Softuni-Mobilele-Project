@@ -46,9 +46,9 @@ public class OffersController {
 
     @GetMapping("/{id}/details")
 
-    public String showOffer(@PathVariable Long id, Model model) {
+    public String showOffer(@PathVariable Long id, Model model, Principal principal) {
 
-        OfferSummaryView offer = this.offerService.findById(id);
+        OfferSummaryView offer = this.offerService.findById(id, principal.getName());
         model.addAttribute("offer", offer);
         model.addAttribute("createdOn", offer.getCreated());
         model.addAttribute("modifiedOn", offer.getModified());
@@ -70,9 +70,9 @@ public class OffersController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editOffer(@PathVariable Long id, Model model) {
+    public String editOffer(@PathVariable Long id, Model model, Principal principal) {
 
-        OfferSummaryView offerSummaryView = this.offerService.findById(id);
+        OfferSummaryView offerSummaryView = this.offerService.findById(id, principal.getName());
 
         OfferUpdateBindingModel offerModel = this.modelMapper.map(offerSummaryView, OfferUpdateBindingModel.class);
 
